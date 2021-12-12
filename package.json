@@ -1,0 +1,9 @@
+{
+  "name": "my-contacts-api",
+  "version": "1.0.0",
+  "description": "API to store contacts",
+  "main": "src/index.js",
+  "repository": "git@github.com:raphaeldevs/my-contacts-api.git",
+  "author": "Raphael Corrêa <raphaeldeoliveiracorrea@gmail.com>",
+  "license": "MIT"
+}
