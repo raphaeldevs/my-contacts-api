@@ -6,6 +6,9 @@
   "repository": "git@github.com:raphaeldevs/my-contacts-api.git",
   "author": "Raphael Corrêa <raphaeldeoliveiracorrea@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon"
+  },
   "dependencies": {
     "express": "^4.17.1"
   },
