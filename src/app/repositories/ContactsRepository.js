@@ -1,5 +1,7 @@
 const { v4: uuid } = require("uuid");
 
+const getTruthyObject = require("../../helpers/getTruthyObject");
+
 let contacts = [
   {
     id: uuid(),
@@ -57,6 +59,24 @@ class ContactsRepository {
       contacts.push(newContact);
 
       resolve(newContact);
+    });
+  }
+
+  update(id, { name, email, phone, category_id }) {
+    return new Promise((resolve) => {
+      const updatedContact = getTruthyObject({
+        id,
+        name,
+        email,
+        phone,
+        category_id,
+      });
+
+      contacts = contacts.map((contact) =>
+        contact.id === id ? { ...contact, ...updatedContact } : contact
+      );
+
+      resolve(updatedContact);
     });
   }
 }
