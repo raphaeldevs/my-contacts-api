@@ -43,7 +43,7 @@ class ContactController {
 }
 
 /**
- * This is a singletone pattern when you want to have only one instance of a
- * class in your application.
+ * This is a singleton pattern, which means your application will have only
+ * one instance of this class.
  */
 module.exports = new ContactController();
