@@ -4,12 +4,12 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: [
-    'airbnb-base',
-  ],
+  extends: ["airbnb-base", "plugin:prettier/recommended"],
   parserOptions: {
     ecmaVersion: 13,
   },
   rules: {
+    "class-methods-use-this": "off",
+    "prettier/prettier": "error",
   },
 };
