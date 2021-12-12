@@ -12,5 +12,6 @@ module.exports = {
     "class-methods-use-this": "off",
     "prettier/prettier": "error",
     "consistent-return": "off",
+    camelcase: "off",
   },
 };
