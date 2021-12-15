@@ -18,8 +18,8 @@ class ContactsRepository {
   async findById(id) {
     const [row] = await database.query(
       `
-      SELECT * FROM contacts WHERE id = $1
-    `,
+        SELECT * FROM contacts WHERE id = $1
+      `,
       [id]
     );
 
@@ -29,8 +29,8 @@ class ContactsRepository {
   async findByEmail(email) {
     const [row] = await database.query(
       `
-      SELECT * FROM contacts WHERE email = $1
-    `,
+        SELECT * FROM contacts WHERE email = $1
+      `,
       [email]
     );
 
@@ -40,10 +40,10 @@ class ContactsRepository {
   async create({ name, email, phone, category_id }) {
     const [row] = await database.query(
       `
-      INSERT INTO contacts (name, email, phone, category_id)
-      VALUES ($1, $2, $3, $4)
-      RETURNING *
-    `,
+        INSERT INTO contacts (name, email, phone, category_id)
+        VALUES ($1, $2, $3, $4)
+        RETURNING *
+      `,
       [name, email, phone, category_id]
     );
 
