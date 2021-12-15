@@ -2,8 +2,6 @@ const getTruthyObject = require("../../helpers/getTruthyObject");
 
 const database = require("../../database");
 
-let contacts = [];
-
 class ContactsRepository {
   async findAll(orderByQuery = "ASC") {
     const orderBy = ["ASC", "DESC"].includes(orderByQuery.toUpperCase())
@@ -81,12 +79,13 @@ class ContactsRepository {
     return row;
   }
 
-  delete(id) {
-    return new Promise((resolve) => {
-      contacts = contacts.filter((user) => user.id !== id);
+  async delete(id) {
+    const deleteOperation = await database.query(
+      `DELETE FROM contacts WHERE id = $1`,
+      [id]
+    );
 
-      resolve();
-    });
+    return deleteOperation;
   }
 }
 
