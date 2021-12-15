@@ -58,7 +58,7 @@ class ContactController {
       return response.status(404).json({ error: "Contact not found" });
     }
 
-    if (name === "") {
+    if (["", null].includes(name)) {
       return response.status(409).json({ error: "Name is required" });
     }
 
@@ -76,6 +76,10 @@ class ContactController {
       phone,
       category_id,
     });
+
+    if (!updatedContact) {
+      return response.sendStatus(304);
+    }
 
     return response.json(updatedContact);
   }

@@ -39,14 +39,6 @@ class ContactsRepository {
     return row;
   }
 
-  delete(id) {
-    return new Promise((resolve) => {
-      contacts = contacts.filter((user) => user.id !== id);
-
-      resolve();
-    });
-  }
-
   async create({ name, email, phone, category_id }) {
     const [row] = await database.query(
       `
@@ -60,21 +52,40 @@ class ContactsRepository {
     return row;
   }
 
-  update(id, { name, email, phone, category_id }) {
+  async update(id, { name, email, phone, category_id }) {
+    const data = getTruthyObject({
+      name,
+      email,
+      phone,
+      category_id,
+    });
+
+    if (Object.keys(data).length <= 0) {
+      return null;
+    }
+
+    const columnsToUpdate = Object.keys(data)
+      .map((column, index) => `${column} = $${index + 1}`)
+      .join(", ");
+
+    const [row] = await database.query(
+      `
+        UPDATE contacts
+        SET ${columnsToUpdate}
+        WHERE id = $${Object.keys(data).length + 1}
+        RETURNING *
+      `,
+      [...Object.values(data), id]
+    );
+
+    return row;
+  }
+
+  delete(id) {
     return new Promise((resolve) => {
-      const updatedContact = getTruthyObject({
-        id,
-        name,
-        email,
-        phone,
-        category_id,
-      });
+      contacts = contacts.filter((user) => user.id !== id);
 
-      contacts = contacts.map((contact) =>
-        contact.id === id ? { ...contact, ...updatedContact } : contact
-      );
-
-      resolve(updatedContact);
+      resolve();
     });
   }
 }
