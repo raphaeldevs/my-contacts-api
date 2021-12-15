@@ -29,7 +29,7 @@ class ContactController {
     );
 
     if (!name) {
-      return response.status(409).json({ error: "Name is required" });
+      return response.status(400).json({ error: "Name is required" });
     }
 
     if (contactAlreadyExists) {
@@ -59,7 +59,7 @@ class ContactController {
     }
 
     if (["", null].includes(name)) {
-      return response.status(409).json({ error: "Name is required" });
+      return response.status(400).json({ error: "Name is required" });
     }
 
     const contactByEmail = await ContactsRepository.findByEmail(email);
