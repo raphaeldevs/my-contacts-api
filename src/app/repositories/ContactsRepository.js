@@ -5,8 +5,14 @@ const database = require("../../database");
 let contacts = [];
 
 class ContactsRepository {
-  async findAll() {
-    const rows = await database.query("SELECT * FROM contacts");
+  async findAll(orderByQuery = "ASC") {
+    const orderBy = ["ASC", "DESC"].includes(orderByQuery.toUpperCase())
+      ? orderByQuery
+      : "ASC";
+
+    const rows = await database.query(
+      `SELECT * FROM contacts ORDER BY name ${orderBy}`
+    );
 
     return rows;
   }
