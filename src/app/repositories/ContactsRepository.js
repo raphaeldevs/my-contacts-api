@@ -1,43 +1,36 @@
-const { v4: uuid } = require("uuid");
-
 const getTruthyObject = require("../../helpers/getTruthyObject");
 
 const database = require("../../database");
 
-let contacts = [
-  {
-    id: uuid(),
-    name: "Rapha",
-    email: "eu@raphaeldevs.com.br",
-    phone: "0000000000000",
-    category_id: uuid(),
-  },
-  {
-    id: uuid(),
-    name: "Diego",
-    email: "diego@reddevs.com.br",
-    phone: "0000000000000",
-    category_id: uuid(),
-  },
-];
+let contacts = [];
 
 class ContactsRepository {
-  findAll() {
-    return new Promise((resolve) => {
-      resolve(contacts);
-    });
+  async findAll() {
+    const rows = await database.query("SELECT * FROM contacts");
+
+    return rows;
   }
 
-  findById(id) {
-    return new Promise((resolve) => {
-      resolve(contacts.find((contact) => contact.id === id));
-    });
+  async findById(id) {
+    const [row] = await database.query(
+      `
+      SELECT * FROM contacts WHERE id = $1
+    `,
+      [id]
+    );
+
+    return row;
   }
 
-  findByEmail(email) {
-    return new Promise((resolve) => {
-      resolve(contacts.find((contact) => contact.email === email));
-    });
+  async findByEmail(email) {
+    const [row] = await database.query(
+      `
+      SELECT * FROM contacts WHERE email = $1
+    `,
+      [email]
+    );
+
+    return row;
   }
 
   delete(id) {
