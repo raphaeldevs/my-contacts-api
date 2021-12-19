@@ -8,9 +8,14 @@ class ContactsRepository {
       ? orderByQuery
       : "ASC";
 
-    const rows = await database.query(
-      `SELECT * FROM contacts ORDER BY name ${orderBy}`
-    );
+    const rows = await database.query(`
+      SELECT
+        contacts.*,
+        categories.name as category_name
+      FROM contacts
+      LEFT JOIN categories ON categories.id = contacts.category_id
+      ORDER BY contacts.name ${orderBy}
+    `);
 
     return rows;
   }
@@ -18,7 +23,12 @@ class ContactsRepository {
   async findById(id) {
     const [row] = await database.query(
       `
-        SELECT * FROM contacts WHERE id = $1
+        SELECT
+          contacts.*,
+          categories.name as category_name
+        FROM contacts
+        LEFT JOIN categories ON categories.id = contacts.category_id
+        WHERE contacts.id = $1
       `,
       [id]
     );
