@@ -6,13 +6,14 @@ const PORT = process.env.PORT || 3333;
 
 const cors = require("./app/middlewares/cors");
 const errorHandler = require("./app/middlewares/errorHandler");
+const requestLogger = require("./app/middlewares/requestLogger");
 const routes = require("./routes");
 
 const app = express();
 
 app.use(express.json());
-// CORS
 app.use(cors);
+app.use(requestLogger);
 app.use(routes);
 app.use(errorHandler);
 
