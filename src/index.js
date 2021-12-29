@@ -2,7 +2,7 @@ const express = require("express");
 
 require("express-async-errors");
 
-const PORT = process.env.PORT || 3333;
+const PORT = process.env.PORT || 3100;
 
 const cors = require("./app/middlewares/cors");
 const errorHandler = require("./app/middlewares/errorHandler");
